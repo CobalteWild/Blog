@@ -1,4 +1,4 @@
-﻿# 博客园风格主题（SimpleMemory 等效实现）
+# 博客园风格主题（SimpleMemory 等效实现）
 # 视觉参考 Cnblogs-Theme-SimpleMemory，纯静态实现，不依赖其 JS
 
 # 站点主人（显示在 banner 上）
@@ -10,7 +10,7 @@ author: CobalteWild
 #   builtin → 从下面的 mottos 列表随机抽
 #   api     → 每次访问请求 mottoApi（一言接口）
 #   txt     → 从仓库里的 mottoTxt 随机读一行
-mottoSource: builtin
+mottoSource: api
 motto: 星垂平野阔，月涌大江流。
 motto_from: 《旅夜书怀》· 唐代 · 杜甫
 
