@@ -1,0 +1,34 @@
+<article class="post-card archive-page">
+  <h1 class="post-title">
+    <% if (is_category()) { %>分类：<%- page.category %>
+    <% } else if (is_tag()) { %>标签：<%- page.tag %>
+    <% } else { %>归档<% } %>
+  </h1>
+
+  <% if (page.posts && page.posts.length) { %>
+    <ul class="archive-list">
+      <% page.posts.each(function (post) { %>
+        <li>
+          <time><%- date(post.date, 'YYYY-MM-DD') %></time>
+          <a href="<%- url_for(post.path) %>"><%- post.title %></a>
+        </li>
+      <% }) %>
+    </ul>
+  <% } else if (site.posts.length) { %>
+    <% var currentYear = ''; %>
+    <% site.posts.sort('-date').each(function (post) { %>
+      <% var y = date(post.date, 'YYYY'); %>
+      <% if (y !== currentYear) { currentYear = y; %>
+        <h2 class="archive-year"><%- y %></h2>
+      <% } %>
+      <ul class="archive-list">
+        <li>
+          <time><%- date(post.date, 'MM-DD') %></time>
+          <a href="<%- url_for(post.path) %>"><%- post.title %></a>
+        </li>
+      </ul>
+    <% }) %>
+  <% } else { %>
+    <p class="empty-tip">还没有文章。</p>
+  <% } %>
+</article>

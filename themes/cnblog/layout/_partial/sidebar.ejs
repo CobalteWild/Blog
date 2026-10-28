@@ -1,0 +1,68 @@
+<aside class="sidebar">
+  <% if (is_post() && page.content && page.content.length > 500) { %>
+    <section class="widget toc-widget">
+      <h3 class="widget-title">目录</h3>
+      <div class="toc-wrap"><%- toc(page.content, { list_number: false }) %></div>
+    </section>
+  <% } %>
+
+  <% (theme.widgets || []).forEach(function (w) { %>
+
+    <% if (w === 'profile') { %>
+      <section class="widget profile">
+        <% if (theme.avatar) { %>
+          <img class="avatar" src="<%- theme.avatar %>" alt="<%- theme.author %>">
+        <% } else { %>
+          <div class="avatar avatar-text"><%- (theme.author || 'A').trim().slice(0, 1).toUpperCase() %></div>
+        <% } %>
+        <h3 class="profile-name"><%- theme.author %></h3>
+        <p class="profile-intro"><%- theme.intro %></p>
+      </section>
+    <% } %>
+
+    <% if (w === 'stats') { %>
+      <section class="widget stats">
+        <div class="stat"><b><%- site.posts.length %></b><span>文章</span></div>
+        <div class="stat"><b><%- site.categories.length %></b><span>分类</span></div>
+        <div class="stat"><b><%- site.tags.length %></b><span>标签</span></div>
+      </section>
+    <% } %>
+
+    <% if (w === 'categories') { %>
+      <section class="widget">
+        <h3 class="widget-title">分类</h3>
+        <ul class="widget-list">
+          <% site.categories.sort('-length').each(function (cat) { %>
+            <li>
+              <a href="<%- url_for(cat.path) %>"><%- cat.name %></a>
+              <span class="count"><%- cat.length %></span>
+            </li>
+          <% }) %>
+        </ul>
+      </section>
+    <% } %>
+
+    <% if (w === 'tags') { %>
+      <section class="widget">
+        <h3 class="widget-title">标签</h3>
+        <div class="tag-cloud">
+          <% site.tags.sort('-length').each(function (tag) { %>
+            <a href="<%- url_for(tag.path) %>"><%- tag.name %><%- tag.length ? '(' + tag.length + ')' : '' %></a>
+          <% }) %>
+        </div>
+      </section>
+    <% } %>
+
+    <% if (w === 'recent') { %>
+      <section class="widget">
+        <h3 class="widget-title">最近文章</h3>
+        <ul class="widget-list recent">
+          <% site.posts.sort('-date').limit(6).each(function (post) { %>
+            <li><a href="<%- url_for(post.path) %>"><%- post.title %></a></li>
+          <% }) %>
+        </ul>
+      </section>
+    <% } %>
+
+  <% }) %>
+</aside>
