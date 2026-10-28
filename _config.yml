@@ -1,0 +1,88 @@
+title: CobalteWild 的博客
+subtitle: ''
+description: ''
+keywords:
+author: CobalteWild
+language: zh-CN
+timezone: 'Asia/Shanghai'
+
+url: https://cobaltewild.github.io
+root: /Blog/
+permalink: :year/:month/:day/:title/
+
+source_dir: source
+public_dir: public
+tag_dir: tags
+archive_dir: archives
+category_dir: categories
+code_dir: downloads/code
+i18n_dir: :lang
+skip_render:
+
+new_post_name: :title.md
+default_layout: post
+titlecase: false
+external_link:
+  enable: true
+  field: site
+  exclude:
+filename_case: 0
+render_drafts: false
+post_asset_folder: false
+relative_link: false
+
+# 定时发布依赖这一项：false 时日期在未来的文章不会被渲染
+future: false
+
+highlight:
+  enable: true
+  line_number: true
+  auto_detect: false
+  tab_replace: ''
+  wrap: true
+  hljs: false
+
+index_generator:
+  path: ''
+  per_page: 10
+  order_by: -date
+
+# 文章加密（hexo-blog-encrypt）
+# 在文章的 front-matter 里写 password: xxx 即可，构建时正文会被加密，
+# 访客输入密码后由浏览器解密。注意：这是真加密，公开的只有密文。
+encrypt:
+  abstract: 这是一篇加密文章，请输入访问密码
+  message: 请输入访问密码
+  wrong_pass_message: 密码不正确，请重试
+  theme: default
+  # 记住密码：密钥存 localStorage，同一篇再访问不用重复输入
+  autoSave: true
+  # salt 跟 permalink 绑定。默认 false 时每次构建 salt 都会变，
+  # GitHub Actions 每次都干净重建，缓存会因此失效、被迫重新输密码。
+  stableSalt: true
+  kdf:
+    iterations: 600000
+
+default_category: uncategorized
+category_map:
+tag_map:
+
+meta_generator: true
+date_format: YYYY-MM-DD
+time_format: HH:mm:ss
+updated_option: 'mtime'
+
+per_page: 10
+pagination_dir: page
+
+theme: landscape
+
+markdown:
+  render:
+    html: true
+    xhtmlOut: false
+    breaks: false
+    linkify: true
+    typographer: false
+  plugins:
+    - "@traptitech/markdown-it-katex"
