@@ -17,7 +17,7 @@ motto_from: 《旅夜书怀》· 唐代 · 杜甫
 # 一言接口（mottoSource: api 时使用）
 # 默认 Hitokoto 的诗词分类，返回 JSON：{ hitokoto, from, from_who, ... }
 # 想换分类就改 c 参数：c=i 诗词 / c=d 文学 / c=k 哲学 ...
-mottoApi: https://v1.hitokoto.cn/?c=i&encode=json
+mottoApi: https://v1.hitokoto.cn/?c=b
 
 # 诗句文件（mottoSource: txt 时使用）
 # 一行一句，可以用 | 分隔出处，例如：长风破浪会有时，直挂云帆济沧海。|《行路难》· 李白
