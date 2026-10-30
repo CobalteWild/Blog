@@ -120,3 +120,11 @@ markdown:
   plugins:
     - "@traptitech/markdown-it-katex"
     - "markdown-it-task-lists"
+
+# ==================== 浏览量（GoatCounter） ====================
+# 免费、无 Cookie 的访客统计，需要在 https://www.goatcounter.com 建一个站点，
+# 并在站点 Settings 里打开 “Allow adding visitor counts on your website”。
+views:
+  enable: true
+  code: 'cobaltewild'
+  label: '阅读'
