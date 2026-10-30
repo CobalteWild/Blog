@@ -1,108 +1,102 @@
-title: CobalteWild 的博客
-subtitle: ''
-description: ''
-keywords:
-author: CobalteWild
-language: zh-CN
-timezone: 'Asia/Shanghai'
+﻿# 博客园风格主题（SimpleMemory 等效实现）
+# 视觉参考 Cnblogs-Theme-SimpleMemory，纯静态实现，不依赖其 JS
 
-url: https://cobaltewild.github.io
-root: /Blog/
-permalink: :year/:month/:day/:title/
+# 站点主人（显示在 banner 上）
+author: FAKUMARER
 
-source_dir: source
-public_dir: public
-tag_dir: tags
-archive_dir: archives
-category_dir: categories
-code_dir: downloads/code
-i18n_dir: :lang
-skip_render:
+# banner 上的格言（首屏先显示 motto，再由 JS 按 mottoSource 替换）
+#
+# mottoSource:
+#   builtin → 从下面的 mottos 列表随机抽
+#   api     → 每次访问请求 mottoApi（一言接口）
+#   txt     → 从仓库里的 mottoTxt 随机读一行
+mottoSource: builtin
+motto: 星垂平野阔，月涌大江流。
+motto_from: 《旅夜书怀》· 唐代 · 杜甫
 
-new_post_name: :title.md
-default_layout: post
-titlecase: false
-external_link:
-  enable: true
-  field: site
-  exclude:
-filename_case: 0
-render_drafts: false
-post_asset_folder: false
-relative_link: false
+# 一言接口（mottoSource: api 时使用）
+# 默认 Hitokoto 的诗词分类，返回 JSON：{ hitokoto, from, from_who, ... }
+# 想换分类就改 c 参数：c=i 诗词 / c=d 文学 / c=k 哲学 ...
+mottoApi: https://v1.hitokoto.cn/?c=i&encode=json
 
-# 定时发布依赖这一项：false 时日期在未来的文章不会被渲染
-future: false
+# 诗句文件（mottoSource: txt 时使用）
+# 一行一句，可以用 | 分隔出处，例如：长风破浪会有时，直挂云帆济沧海。|《行路难》· 李白
+mottoTxt: /motto.txt
 
-highlight:
-  enable: true
-  line_number: true
-  auto_detect: false
-  tab_replace: ''
-  wrap: true
-  hljs: false
+# 内置诗句库（mottoSource: builtin 时生效）
+mottos:
+  - text: 星垂平野阔，月涌大江流。
+    from: 《旅夜书怀》· 唐代 · 杜甫
+  - text: 长风破浪会有时，直挂云帆济沧海。
+    from: 《行路难·其一》· 唐代 · 李白
+  - text: 会当凌绝顶，一览众山小。
+    from: 《望岳》· 唐代 · 杜甫
+  - text: 千磨万击还坚劲，任尔东西南北风。
+    from: 《竹石》· 清代 · 郑燮
+  - text: 沉舟侧畔千帆过，病树前头万木春。
+    from: 《酬乐天扬州初逢席上见赠》· 唐代 · 刘禹锡
+  - text: 海内存知己，天涯若比邻。
+    from: 《送杜少府之任蜀州》· 唐代 · 王勃
+  - text: 落霞与孤鹜齐飞，秋水共长天一色。
+    from: 《滕王阁序》· 唐代 · 王勃
+  - text: 山重水复疑无路，柳暗花明又一村。
+    from: 《游山西村》· 宋代 · 陆游
+  - text: 不经一番寒彻骨，怎得梅花扑鼻香。
+    from: 《上堂开示颂》· 唐代 · 黄檗禅师
+  - text: 路漫漫其修远兮，吾将上下而求索。
+    from: 《离骚》· 战国 · 屈原
+  - text: 大鹏一日同风起，扶摇直上九万里。
+    from: 《上李邕》· 唐代 · 李白
+  - text: 莫愁前路无知己，天下谁人不识君。
+    from: 《别董大》· 唐代 · 高适
+  - text: 生当作人杰，死亦为鬼雄。
+    from: 《夏日绝句》· 宋代 · 李清照
+  - text: 天行健，君子以自强不息。
+    from: 《周易·乾卦》
+  - text: 博观而约取，厚积而薄发。
+    from: 《稼说送张琥》· 宋代 · 苏轼
+  - text: 纸上得来终觉浅，绝知此事要躬行。
+    from: 《冬夜读书示子聿》· 宋代 · 陆游
+  - text: 问渠那得清如许？为有源头活水来。
+    from: 《观书有感》· 宋代 · 朱熹
+  - text: 衣带渐宽终不悔，为伊消得人憔悴。
+    from: 《蝶恋花》· 宋代 · 柳永
+  - text: 众里寻他千百度，蓦然回首，那人却在，灯火阑珊处。
+    from: 《青玉案·元夕》· 宋代 · 辛弃疾
+  - text: 江山代有才人出，各领风骚数百年。
+    from: 《论诗五绝·其二》· 清代 · 赵翼
 
-index_generator:
-  path: ''
-  per_page: 10
-  order_by: -date
+# banner 背景图
+# 默认使用主题自带的图片（themes/cnblog/source/images/banner.webp），
+# 原博客园那份 CDN 图有防盗链，外站引用会 403，所以不能直接用。
+# 想换成自己的图：用后台上传拿到 /images/xxx.webp，再把这里改掉即可。
+banner: /images/banner.webp
 
-# 文章加密（hexo-blog-encrypt）
-# 在文章的 front-matter 里写 password: xxx 即可，构建时正文会被加密，
-# 访客输入密码后由浏览器解密。注意：这是真加密，公开的只有密文。
-encrypt:
-  abstract: 这是一篇加密文章，请输入访问密码
-  message: 请输入访问密码
-  wrong_pass_message: 密码不正确，请重试
-  theme: default
-  # 记住密码：密钥存 localStorage，同一篇再访问不用重复输入
-  autoSave: true
-  # salt 跟 permalink 绑定。默认 false 时每次构建 salt 都会变，
-  # GitHub Actions 每次都干净重建，缓存会因此失效、被迫重新输密码。
-  stableSalt: true
-  kdf:
-    iterations: 600000
+# 头像
+avatar: https://cdn.luogu.com.cn/upload/usericon/386597.png
 
-default_category: uncategorized
-category_map:
-tag_map:
+# 侧边栏简介
+intro: 这里是 FAKUMARER 的博客，记录算法竞赛、代码与生活。
 
-meta_generator: true
-date_format: YYYY-MM-DD
-time_format: HH:mm:ss
-updated_option: 'mtime'
+# 导航菜单
+menu:
+  首页: /
+  归档: /archives/
+  分类: /categories/
+  标签: /tags/
 
-per_page: 10
-pagination_dir: page
+# 侧边栏显示的 widget 顺序（可注释掉不需要的）
+widgets:
+  - profile
+  - stats
+  - categories
+  - tags
+  - recent
 
-theme: cnblog
+# 页脚
+footer:
+  since: 2026
+  copyright: FAKUMARER
 
-markdown:
-  render:
-    html: true
-    xhtmlOut: false
-    breaks: false
-    linkify: true
-    typographer: false
-  plugins:
-    - "@traptitech/markdown-it-katex"
-
-# ==================== 评论（giscus） ====================
-# 评论存在本仓库的 GitHub Discussions 里，不需要任何服务器，也不会有广告和追踪。
-# enable 打开、且 repo / repoId / categoryId 都填了，文章页才会渲染评论区。
-# 这几个 ID 在 https://giscus.app 选好仓库和分类后自动生成。
-comments:
-  enable: true
-  giscus:
-    repo: 'CobalteWild/Blog'
-    repoId: 'R_kgDOVaTT2g'
-    category: ''
-    categoryId: 'DIC_kwDOVaTT2s4DKAk7'
-    mapping: 'pathname'
-    strict: 0
-    reactionsEnabled: 1
-    emitMetadata: 0
-    inputPosition: 'top'
-    lang: 'zh-CN'
-    theme: 'auto'
-    loading: 'lazy'
+# 评论：配置不在主题里，在站点根目录 _config.yml 的 comments 段（后台「设置 → 评论」）。
+# 主题安装会整份覆盖本文件，放这里的话 repoId 每次都要重填。

@@ -19,7 +19,32 @@ hexo.extend.filter.register('after_init', function () {
 // 引用块里的 ">文字"（> 后没有空格）在 fenced code 内会让 markdown-it 把 ">" 留在代码里。
 // 渲染前补空格，渲染后再对代码块兜底清理一次。
 hexo.extend.filter.register('before_post_render', function (data) {
+  // 引用块里 ">文字" 缺空格时，fenced code 内会把 > 留在代码里
   data.content = data.content.replace(/^>(\S)/gm, '> $1');
+
+  // 行内公式两端有空白时 markdown-it-katex 会直接跳过（$ x $ 原样输出），
+  // 这里去掉首尾空白，$$ 块不受影响。
+  data.content = data.content.replace(
+    /\$(?!\$)([ \t]*)([^$\n]+?)([ \t]*)\$(?!\$)/g,
+    function (m, a, inner) {
+      if (!inner.trim()) return m;
+      return '$' + inner.trim() + '$';
+    }
+  );
+
+  // 任务列表项里的 ATX 标题（- [ ] ##### xxx）改成 HTML 标题。
+  // markdown-it 不支持列表项内写标题（##### 不在行首），Typora 支持；这里等价实现。
+  data.content = data.content.replace(
+    /^([ \t]*(?:[-*+]|\d+[.)])[ \t]+)\[([ xX])\][ \t]+(#{1,6})[ \t]+(.+)$/gm,
+    function (m, prefix, mark, hashes, content) {
+      var level = hashes.length;
+      var checked = mark.toLowerCase() === 'x' ? ' checked' : '';
+      var inner = content.replace(/\[([^\]]*)\]\(([^)]+)\)/g, '<a href="$2">$1</a>');
+      return prefix + '<input type="checkbox" class="task-list-item-checkbox" disabled'
+        + checked + '> <h' + level + '>' + inner + '</h' + level + '>';
+    }
+  );
+
   return data;
 });
 
