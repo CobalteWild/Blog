@@ -597,6 +597,63 @@ body.dark .post-content code { color: #e5a0a0; }
 .post-nav-item em { font-style: normal; font-size: 13.5px; color: var(--text); }
 .post-nav-item.next { text-align: right; }
 
+/* ============ 评论（giscus） ============ */
+.post-comments {
+  margin-top: 38px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+
+.comments-title {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin: 0 0 18px;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.comments-title::before {
+  content: '';
+  flex: 0 0 auto;
+  width: 4px;
+  height: 17px;
+  border-radius: 2px;
+  background: var(--primary);
+}
+
+/* giscus 自己会往 .giscus 里塞 iframe 并加载它自己的 default.css */
+.giscus {
+  width: 100%;
+  min-height: 180px;
+}
+
+.giscus-frame {
+  width: 100%;
+  border: none;
+}
+
+/* 脚本还没把 iframe 插进来时的占位，避免评论区高度突然塌陷 */
+.giscus:empty::before {
+  content: '正在加载评论…';
+  display: block;
+  padding: 28px 0;
+  text-align: center;
+  font-size: 13px;
+  color: var(--text-dim);
+}
+
+.comments-noscript {
+  margin: 0;
+  padding: 16px 18px;
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--text-light);
+  background: var(--primary-light);
+  border-radius: var(--radius);
+}
+
 /* ============ 归档 / 分类 / 标签 ============ */
 .archive-year {
   margin: 1.6em 0 .6em;
@@ -696,14 +753,12 @@ body.dark .post-content code { color: #e5a0a0; }
   flex-direction: column;
   gap: 18px;
   transition: opacity .25s;
-  scrollbar-width: thin;
+  /* 隐藏滚动条但保留滚动能力 */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
-.sidebar::-webkit-scrollbar { width: 6px; }
-.sidebar::-webkit-scrollbar-thumb {
-  background: var(--border);
-  border-radius: 3px;
-}
+.sidebar::-webkit-scrollbar { display: none; }
 
 /* 桌面端：MENU 把侧栏整体收起，主内容占满 */
 body.sidebar-collapsed .sidebar { display: none; }
@@ -775,16 +830,32 @@ body.sidebar-open .sidebar-mask { display: block; }
 .widget-list { list-style: none; margin: 0; padding: 0; }
 
 .widget-list li {
+  padding: 0;
+  font-size: 13.5px;
+}
+
+/* 整行都能点：a 撑满 li，名称和计数用 flex 分开 */
+.widget-list li > a {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 8px;
-  padding: 6px 0;
-  font-size: 13.5px;
+  padding: 7px 10px;
+  border-radius: 7px;
+  color: var(--text-light);
+  transition: background .15s, color .15s;
 }
 
-.widget-list a { color: var(--text-light); }
-.widget-list a:hover { color: var(--primary); }
+.widget-list li > a:hover {
+  background: var(--primary-light);
+  color: var(--primary);
+}
+
+.widget-list .cat-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 
 .widget-list .count { font-size: 11.5px; color: var(--text-dim); }
 
@@ -1051,3 +1122,175 @@ body.dark #hexo-blog-encrypt .hbe-error { color: #e57373; }
 
 .post-abstract-body p { margin: 0; }
 .post-abstract-body img { display: none; }
+/* ============ 归档 / 分类 / 标签列表 ============ */
+.archive-page { padding-bottom: 10px; }
+
+.archive-year {
+  margin: 1.5em 0 .5em;
+  padding-bottom: .3em;
+  border-bottom: 1px solid var(--border);
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--primary);
+}
+.archive-year:first-of-type { margin-top: .8em; }
+
+.archive-item {
+  padding: .5em 0;
+  border-bottom: 1px dashed var(--border);
+}
+.archive-item:last-of-type { border-bottom: none; }
+
+.archive-head {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.archive-date {
+  flex: 0 0 auto;
+  font-size: 12.5px;
+  color: var(--text-dim);
+  font-variant-numeric: tabular-nums;
+}
+
+.archive-title {
+  font-size: 15px;
+  color: var(--text);
+  transition: color .15s;
+}
+.archive-title:hover { color: var(--primary); }
+
+/* 标题下面的摘要，小一号灰字 */
+.archive-excerpt {
+  margin: 3px 0 0 62px;
+  font-size: 12.8px;
+  line-height: 1.65;
+  color: var(--text-dim);
+}
+
+.archive-total {
+  margin: 1.4em 0 0;
+  font-size: 12.5px;
+  color: var(--text-dim);
+  text-align: center;
+}
+
+@media (max-width: 560px) {
+  .archive-excerpt { margin-left: 0; }
+}
+/* ============ 同分类合集（文章页侧栏）============ */
+.cat-series .widget-title {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+}
+.cat-series .widget-title a { color: inherit; }
+
+.series-count {
+  font-size: 11.5px;
+  font-weight: 400;
+  color: var(--text-dim);
+}
+
+.series-list {
+  margin: 0;
+  padding: 0 0 0 1.5em;
+  font-size: 13px;
+  line-height: 1.75;
+  color: var(--text-light);
+  max-height: 40vh;
+  overflow-y: auto;
+}
+
+.series-list li { margin: 2px 0; }
+
+.series-list a {
+  color: var(--text-light);
+  transition: color .15s;
+}
+.series-list a:hover { color: var(--primary); }
+
+.series-list li.active {
+  font-weight: 600;
+}
+.series-list li.active a {
+  color: var(--primary);
+}
+
+.series-list::-webkit-scrollbar { width: 5px; }
+.series-list::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+}
+/* 分类索引页：子分类缩进 */
+.cat-list .cat-item.cat-child {
+  padding-left: 30px;
+  position: relative;
+}
+.cat-list .cat-item.cat-child::before {
+  content: "└";
+  position: absolute;
+  left: 12px;
+  color: var(--border);
+}
+/* 目录 / 合集 / 分类索引：隐藏滚动条，保留滚动 */
+.toc-wrap,
+.series-list {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.toc-wrap::-webkit-scrollbar,
+.series-list::-webkit-scrollbar { display: none; }
+
+/* 侧栏分类项：覆盖索引页的 .cat-item 样式（那里是 flex 卡片），否则 a 会被当 flex item 收缩 */
+.widget-list .cat-item {
+  display: block;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+}
+.widget-list li > a { width: 100%; box-sizing: border-box; }
+.widget-list li.cat-child > a { padding-left: 22px; position: relative; }
+.widget-list li.cat-child > a::before {
+  content: "└";
+  position: absolute;
+  left: 8px;
+  color: var(--border);
+}
+/* ============ 任务列表 ============ */
+.post-content .contains-task-list,
+.post-content .contains-task-list > li,
+.post-content li:has(> input[type="checkbox"]) {
+  list-style: none;
+}
+.post-content .contains-task-list,
+.post-content ul:has(> li > input[type="checkbox"]) {
+  padding-left: 1.2em;
+}
+.post-content .task-list-item {
+  list-style: none;
+  margin: .3em 0;
+}
+.post-content .task-list-item-checkbox {
+  margin-right: 6px;
+  width: 13px;
+  height: 13px;
+  vertical-align: middle;
+  accent-color: var(--primary);
+}
+/* 列表项内的标题（- [ ] ##### xxx）：紧凑显示，像 Typora */
+.post-content li > h1, .post-content li > h2, .post-content li > h3,
+.post-content li > h4, .post-content li > h5, .post-content li > h6 {
+  display: inline;
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--primary);
+}
+.post-content li > h1 a, .post-content li > h2 a, .post-content li > h3 a,
+.post-content li > h4 a, .post-content li > h5 a, .post-content li > h6 a {
+  color: inherit;
+}

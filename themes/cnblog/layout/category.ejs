@@ -1,11 +1,18 @@
-<% if (page.type === 'categories' && !page.category) { %>
+﻿<% if (page.type === 'categories' && !page.category) { %>
   <article class="post-card archive-page">
     <h1 class="post-title">分类</h1>
     <% if (site.categories.length) { %>
       <div class="cat-list">
         <% site.categories.sort('-length').each(function (cat) { %>
-          <a class="cat-item" href="<%- url_for(cat.path) %>">
-            <span class="cat-name"><%- cat.name %></span>
+          <%
+            var catFull = decodeURIComponent(cat.path || '')
+              .replace(/^categories\//, '')
+              .replace(/\/$/, '');
+            if (!catFull) catFull = cat.name;
+            var catDepth = catFull.split('/').length - 1;
+          %>
+          <a class="cat-item<%- catDepth > 0 ? ' cat-child' : '' %>" href="<%- url_for(cat.path) %>">
+            <span class="cat-name"><%- catFull %></span>
             <em class="cat-count"><%- cat.length %></em>
           </a>
         <% }) %>
