@@ -127,4 +127,4 @@ markdown:
 views:
   enable: true
   code: 'cobaltewild'
-  label: '阅读'
+  label: '阅读量'
