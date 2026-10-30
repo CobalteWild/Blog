@@ -1,4 +1,4 @@
-# 博客园风格主题（SimpleMemory 等效实现）
+﻿# 博客园风格主题（SimpleMemory 等效实现）
 # 视觉参考 Cnblogs-Theme-SimpleMemory，纯静态实现，不依赖其 JS
 
 # 站点主人（显示在 banner 上）
@@ -10,14 +10,14 @@ author: CobalteWild
 #   builtin → 从下面的 mottos 列表随机抽
 #   api     → 每次访问请求 mottoApi（一言接口）
 #   txt     → 从仓库里的 mottoTxt 随机读一行
-mottoSource: api
-motto: 我是你爸爸
-motto_from: CobalteWild
+mottoSource: builtin
+motto: 星垂平野阔，月涌大江流。
+motto_from: 《旅夜书怀》· 唐代 · 杜甫
 
 # 一言接口（mottoSource: api 时使用）
 # 默认 Hitokoto 的诗词分类，返回 JSON：{ hitokoto, from, from_who, ... }
 # 想换分类就改 c 参数：c=i 诗词 / c=d 文学 / c=k 哲学 ...
-mottoApi: https://v1.hitokoto.cn
+mottoApi: https://v1.hitokoto.cn/?c=i&encode=json
 
 # 诗句文件（mottoSource: txt 时使用）
 # 一行一句，可以用 | 分隔出处，例如：长风破浪会有时，直挂云帆济沧海。|《行路难》· 李白
