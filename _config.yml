@@ -92,7 +92,7 @@ markdown:
 # enable 打开、且 repo / repoId / categoryId 都填了，文章页才会渲染评论区。
 # 这几个 ID 在 https://giscus.app 选好仓库和分类后自动生成。
 comments:
-  enable: false
+  enable: true
   giscus:
     repo: 'CobalteWild/Blog'
     repoId: 'R_kgDOVaTT2g'
