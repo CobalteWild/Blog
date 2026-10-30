@@ -86,3 +86,23 @@ markdown:
     typographer: false
   plugins:
     - "@traptitech/markdown-it-katex"
+
+# ==================== 评论（giscus） ====================
+# 评论存在本仓库的 GitHub Discussions 里，不需要任何服务器，也不会有广告和追踪。
+# enable 打开、且 repo / repoId / categoryId 都填了，文章页才会渲染评论区。
+# 这几个 ID 在 https://giscus.app 选好仓库和分类后自动生成。
+comments:
+  enable: false
+  giscus:
+    repo: 'CobalteWild/Blog'
+    repoId: 'R_kgDOVaTT2g'
+    category: ''
+    categoryId: 'DIC_kwDOVaTT2s4DKAk7'
+    mapping: 'pathname'
+    strict: 0
+    reactionsEnabled: 1
+    emitMetadata: 0
+    inputPosition: 'top'
+    lang: 'zh-CN'
+    theme: 'auto'
+    loading: 'lazy'
