@@ -173,6 +173,22 @@
   // 深浅色确定之后再挂 giscus，脚本里的 data-theme 才是首屏该有的值
   mountGiscus();
 
+  // 浏览量（GoatCounter）：读 count.json 填数字。
+  // 没开「Allow adding visitor counts」或被广告插件拦截时会失败，保持隐藏即可。
+  var viewsEl = document.querySelector('.post-views');
+  if (viewsEl && viewsEl.dataset.code) {
+    fetch('https://' + viewsEl.dataset.code + '.goatcounter.com/counter/'
+      + encodeURIComponent(location.pathname) + '.json',
+      { headers: { Accept: 'application/json' } })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (d) {
+        if (!d || d.count == null) return;
+        viewsEl.textContent = (viewsEl.dataset.label || '阅读') + ' ' + d.count;
+        viewsEl.hidden = false;
+      })
+      .catch(function () { /* 忽略 */ });
+  }
+
   // 目录滚动高亮
   var tocLinks = Array.prototype.slice.call(document.querySelectorAll('.toc-wrap .toc-link'));
   if (tocLinks.length) {

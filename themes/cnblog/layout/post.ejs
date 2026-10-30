@@ -8,6 +8,15 @@
         <a class="meta-item meta-cat" href="<%- url_for(cat.path) %>"><%- cat.name %></a>
       <% }) %>
     <% } %>
+    <%
+      // 浏览量（GoatCounter）：数字由 /js/main.js 拉取后填进来，拉不到就不显示
+      var _vs = config.views || {};
+    %>
+    <% if (_vs.enable && _vs.code) { %>
+      <span class="meta-item post-views"
+        data-code="<%= _vs.code %>"
+        data-label="<%= _vs.label || '阅读' %>" hidden></span>
+    <% } %>
   </div>
 
   <div class="post-content">

@@ -333,6 +333,10 @@ body.dark .navbar.scrolled {
 }
 .meta-cat:hover { background: var(--primary); color: #fff; }
 
+/* 浏览量：数字由 JS 填，取不到时保持 hidden */
+.post-views { color: var(--text-dim); }
+.post-views[hidden] { display: none; }
+
 .post-excerpt {
   margin: 16px 0 0;
   color: var(--text-light);
